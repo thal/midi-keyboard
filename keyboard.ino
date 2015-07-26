@@ -35,7 +35,7 @@ void setup()
   pinMode(5, INPUT_PULLUP);
   pinMode(6, INPUT_PULLUP);
   pinMode(7, INPUT_PULLUP);
-  Serial.begin(9600);
+  //Serial.begin(9600);
   Serial1.begin(31250);
 }
 
@@ -67,13 +67,13 @@ void loop()
           midi.noteOff(scale[buttonToNote[i]]);
         }
       }
-      else if(songPos < songLength )
+      else
       {
         if( buttonState == LOW )
         {
-          midi_chord chord = song[songPos++];        
+          midi_chord chord = song[songPos];
+          songPos = (songPos+1) % songLength;
           midi.playChord(chord);
-          Serial.println(sizeof(midi_chord), DEC);
         }
         else
         {
